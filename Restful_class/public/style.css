@@ -1,0 +1,24 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    color: brown;
+}
+
+.post {
+    background-color: rgb(152, 108, 108);
+}
+
+.user {
+    color: rgb(19, 19, 18);
+}
+
+.content {
+    color: white;
+}
+
+a {
+    color: white;
+
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <%for(data of data){%>
+        <div class="users" style="background-color:pink">
+            <h1>userid :<%=data.id%>
+            </h1>
+            <h2>Username:<%=data.username%>
+            </h2>
+            <h2>email:<%=data.email%>
+            </h2>
+            <form method="GET" action="/user/<%=data.id%>/edit">
+                <button>edit username</button>
+            </form>
+
+        </div>
+        <%}%>
+</body>
+
+</html>
