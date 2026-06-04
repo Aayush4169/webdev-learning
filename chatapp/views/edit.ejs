@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3> Edit the chat</h3>
+    <p> this chat is sent from <%=edchat.from%> to <%=edchat.to%>
+
+    </p>
+    <form method="POST" action="/chats/<%=edchat._id%>?_method=PUT">
+        <textarea name="msg"> <%=edchat.msg%></textarea>
+        <br>
+        <button> submit</button>
+
+    </form>
+
+
+
+
+</html>
