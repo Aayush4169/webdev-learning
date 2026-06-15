@@ -5,6 +5,7 @@ const port = 3000;
 const path = require("path");
 const chat = require("./models/chat.js");
 const methodOverride = require("method-override");
+const expressError = require("./customerror.js");
 //  parse the data
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -78,6 +79,22 @@ app.delete("/chats/:id", async (req, res) => {
   console.log(delchat);
   res.redirect("/chats");
 });
+
+//  new route for error handlingggg
+
+app.get("/chats/:id", async (req, res, next) => {
+  let { id } = req.params;
+  let schat = await chat.findById(id);
+  if (!schat) {
+    next(new expressError(500, "chat not found"));
+  }
+  res.send(schat);
+});
+app.use((err, req, res, next) => {
+  let { status = 400, message = "not found" } = err;
+  res.status(status).send(message);
+});
+
 app.listen(port, (req, res) => {
   console.log(`app is listeing on port  ${port} `);
 });
