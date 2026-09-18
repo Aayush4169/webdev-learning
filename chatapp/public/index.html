@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Chatting App</h1>
+
+    <ul id="chats">Chatting</ul>
+    <label>Send message to:</label>
+    <select id="user">
+        <option value="101">Ramesh</option>
+        <option value="102">Suresh</option>
+        <option value="103">Santosh</option>
+        <option value="104">EveryOne</option>
+
+    </select>
+
+    <label>Current USer</label>
+    <select id="currentUser">
+        <option value="101">Ramesh</option>
+        <option value="102">Suresh</option>
+        <option value="103">Santosh</option>
+    </select>
+
+    <button id="login">Login</button>
+
+    <form>
+        <label for="input"> Message</label>
+        <input id="input" type="text">
+        <button id="sndbtn">Send</button>
+        <button id="sndroom">Group</button>
+        <button id="joinroom">Joinroom</button>
+        <button id="disbtn">Disconnect</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const input = document.querySelector("#input");
+        const btn = document.querySelector("#sndbtn");
+        const chats = document.querySelector("#chats");
+        const disbtn = document.querySelector("#disbtn");
+        const sndroom = document.querySelector("#sndroom");
+        const reciever = document.querySelector("#user");
+        const currentUser = document.querySelector("#currentUser");
+        const login = document.querySelector("#login");
+        btn.onclick = (e) => {
+            e.preventDefault();
+            socket.emit("message", { recieveId: reciever.value, message: input.value });
+            input.value = "";
+        }
+
+        socket.on("message", (msg) => {
+            const li = document.createElement("li")
+            li.innerText = msg;
+
+            chats.appendChild(li);
+
+        })
+        disbtn.onclick = (e) => {
+            e.preventDefault();
+            if (socket.connected) {
+                socket.disconnect();
+                disbtn.innerText = "connected"
+
+            }
+            else {
+                socket.connect();
+                disbtn.innerText = "disconnected"
+            }
+        }
+
+
+        login.onclick = () => {
+            const userId = currentUser.value;
+
+            socket.emit("login", userId);
+        };
+        const roomname = "Yadav"
+
+        joinroom.onclick = (e) => {
+            e.preventDefault();
+            socket.emit("join-room", roomname);
+        }
+
+        sndroom.onclick = (e) => {
+            e.preventDefault();
+            socket.emit("send_room", { roomname: roomname, message: input.value });
+        }
+
+
+    </script>
+
+</body>
+
+</html>

@@ -27,28 +27,15 @@ main()
 app.get("/", (req, res) => {
   res.send("root is working");
 });
-
-//  wrapasync function for handlig the errorss
-
-function wrapasync(func) {
-  return function (req, res, next) {
-    func(req, res, next).catch((err) => {
-      next(err);
-    });
-  };
-}
 // index route showing all the chatsss
-app.get(
-  "/chats",
-  wrapasync(async (req, res, next) => {
-    try {
-      const chats = await chat.find();
-      res.render("show.ejs", { chats });
-    } catch (err) {
-      next(err);
-    }
-  }),
-);
+app.get("/chats", async (req, res, next) => {
+  try {
+    const chats = await chat.find();
+    res.render("show.ejs", { chats });
+  } catch (err) {
+    next(err);
+  }
+});
 
 //  add new chat form
 app.get("/chats/new", (req, res, next) => {

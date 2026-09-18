@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+node_modules
+.env
+dist
+build
+=======
+node_modules/
+.env
+>>>>>>> 5836a53 (Add a real time chat App)
